@@ -5,9 +5,12 @@ require.config
     backbone: '../components/backbone/backbone'
     bootstrap: '../components/bootstrap/dist/js/bootstrap'
     handlebars: "../components/handlebars/handlebars"
+    pixi: "../components/pixi/bin/pixi"
   shim:
     underscore:
       exports: '_'
+    pixi:
+      exports: 'PIXI'
     backbone:
       deps: ['jquery', 'underscore']
       exports: 'Backbone'
