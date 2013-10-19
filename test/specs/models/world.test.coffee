@@ -28,3 +28,6 @@ define (require) ->
       world.init()
       world.squares[0].should.be.instanceOf Square
 
+    it "should have info about ports", ->
+      world.init()
+      
