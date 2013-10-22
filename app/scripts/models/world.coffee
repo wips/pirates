@@ -1,13 +1,22 @@
 define (require) ->
 
   Backbone = require 'backbone'
-  Square = require 'models/square'
+  Ocean = require "models/ocean"
 
   Backbone.Model.extend
-    width: 53
-    height: 30
-    squares: []
+    width: 0
+    height: 0
+    fields: []
 
-    init: ->
-      @squares.push new Square for i in [1..@width*@height]
-      console.dir @squares
+    init: (params) ->
+      @width = params.width
+      @height = params.height
+      @fields = new Array @width*@height
+      @fields[i] = @initField i for i of params.fields when params.fields[i] is 1
+
+    initField: (type) ->
+      field = new Ocean
+      field.init direction: type
+      field
+
+
