@@ -27,7 +27,7 @@ module.exports = (grunt) ->
         nospawn: true
 
       coffee:
-        files: ["<%= yeoman.app %>scripts/{,*/}*.coffee"]
+        files: ["<%= yeoman.app %>scripts/**/*.coffee"]
         tasks: ["coffeeCoverage"]
 
       coffeeTest:

@@ -35,20 +35,23 @@ define (require) ->
         params.width = 2
         params.height = 3
 
-      it "should initialize ocean fields for every drift direction", ->
-        params.fields = [
-          1
-          Compass::NORTH
-          Compass::NORTHEAST
-          Compass::EAST
-          Compass::NORTHWEST
-          Compass::WEST
-          Compass::SOUTHWEST
-          Compass::SOUTH
-          Compass::SOUTHEAST
-        ]
-        world.init params
-        world.fields[1].should.be.instanceOf Ocean
+      directions = [
+        1
+        Compass::NORTH
+        Compass::NORTHEAST
+        Compass::EAST
+        Compass::NORTHWEST
+        Compass::WEST
+        Compass::SOUTHWEST
+        Compass::SOUTH
+        Compass::SOUTHEAST
+      ]
+
+      using "Ocean  field", directions, (direction) ->
+        it "should initialize ocean fields for every drift direction", ->
+          params.fields = [1, direction]
+          world.init params
+          world.fields[1].should.be.instanceOf Ocean
 
       it "should initialize ocean fields", ->
         params.fields = [0, 1]

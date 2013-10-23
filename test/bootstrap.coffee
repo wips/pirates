@@ -43,6 +43,14 @@ runMocha = ->
   else
     mocha.run()
 
+using = (name, values, func) ->
+  i = 0
+  count = values.length
+  while i < count
+    values[i] = [values[i]]  if Object::toString.call(values[i]) isnt "[object Array]"
+    func.apply this, values[i]
+    i++
+
 # initialize sinone sandbox
 beforeEach ->
   env = sinon.sandbox.create()

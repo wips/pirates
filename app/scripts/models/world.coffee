@@ -12,7 +12,7 @@ define (require) ->
       @width = params.width
       @height = params.height
       @fields = new Array @width*@height
-      @fields[i] = @initField i for i of params.fields when params.fields[i] is 1
+      @fields[i] = @initField params.fields[i] for i of params.fields when params.fields[i] in [1..9]
 
     initField: (type) ->
       field = new Ocean
