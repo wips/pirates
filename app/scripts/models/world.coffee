@@ -2,6 +2,7 @@ define (require) ->
 
   Backbone = require 'backbone'
   Ocean = require "models/ocean"
+  FieldFactory = require "models/factories/field"
 
   Backbone.Model.extend
     width: 0
@@ -12,7 +13,7 @@ define (require) ->
       @width = params.width
       @height = params.height
       @fields = new Array @width*@height
-      @fields[i] = @initField params.fields[i] for i of params.fields when params.fields[i] in [1..9]
+      @fields[i] = FieldFactory::create params.fields[i] for i of params.fields
 
     initField: (type) ->
       field = new Ocean
