@@ -14,7 +14,7 @@
         "grunt-mocha-phantomjs": "~0.3.x",
         "grunt-mocha-browser": "~0.0.x",
         "load-grunt-tasks": "~0.1.x",
-        "connect-livereload": "~0.2.0",
+        "connect-livereload": "~0.3.0",
         "time-grunt": "~0.1.x",
         "grunt-contrib-copy": "~0.4.x",
         "grunt-contrib-concat": "~0.1.x",
