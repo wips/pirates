@@ -4,8 +4,9 @@ define (require) ->
 
   class World
     init: ->
-      @stage = new PIXI.Stage 0x66FF99
+      @stage = new PIXI.Stage 0xEEFFFF
       @renderer = PIXI.autoDetectRenderer 1060, 600
 
     render: ->
+      @renderer.render @stage
       @renderer.view

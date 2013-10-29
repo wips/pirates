@@ -31,8 +31,15 @@ define (require) ->
     it 'should vperdolivat canvas', ->
       view = 'view'
       sut.init()
+      env.stub sut.renderer, 'render'
       sut.renderer.view = view
       sut.render().should.equal view
+
+    it 'should render PIXI renderer canvas', ->
+      sut.init()
+      render = env.stub sut.renderer, 'render'
+      sut.render()
+      render.should.have.been.calledWith sut.stage
 
 
 
