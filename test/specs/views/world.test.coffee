@@ -28,5 +28,11 @@ define (require) ->
       sut.init()
       sut.renderer.should.equal 'renderer'
 
+    it 'should vperdolivat canvas', ->
+      view = 'view'
+      sut.init()
+      sut.renderer.view = view
+      sut.render().should.equal view
+
 
 

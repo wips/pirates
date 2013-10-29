@@ -10,4 +10,4 @@ define (require) ->
 
     defaultRoute: ->
       @view = new ApplicationView()
-      $('#main').html @view.render()
+      @view.render()

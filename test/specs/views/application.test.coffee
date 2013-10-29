@@ -7,26 +7,25 @@ define (require) ->
 
     it "should initialize world", ->
       worldStub = env.stub WorldView::, 'init'
-      sut = new ApplicationView
+      new ApplicationView
       worldStub.should.have.been.called
 
-    it "should set rendered world view to DOM", ->
+    describe 'after initialization', ->
 
-      sut = new ApplicationView
-      $stub = env.stub(sut, $).withArgs('[id="main"]')
-      sut.render()
-      $stub.should.have.been.calledWith()
+      sut = null
 
-    it "should initialize renderer", ->
-      worldRenderStub = env.stub WorldView::, 'render'
-      stageStub = env.stub PIXI, 'autoDetectRenderer'
-      sut.init()
-      stageStub.should.have.been.calledWith 1060, 600
+      beforeEach ->
+        sut = new ApplicationView
 
-    it "should have information about renderer", ->
-      env.stub(PIXI, 'autoDetectRenderer').returns 'renderer'
-      sut.init()
-      sut.renderer.should.equal 'renderer'
+      it "should set rendered world view to DOM", ->
+        rendered = 'some canvas'
+        env.stub(sut.worldView, 'render').returns rendered
+        html = env.stub sut.$el, 'html'
+        sut.render()
+        html.should.have.been.calledWith rendered
+
+      it "should have DOM element", ->
+        ApplicationView::el.should.equal '#main'
 
 
 
