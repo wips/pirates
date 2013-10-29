@@ -7,14 +7,15 @@ require.config
     backbone: "../components/backbone/backbone"
     chai: "../components/chai/chai"
     chaiJquery: "../components/chai-jquery/chai-jquery"
+    pixi: "../components/pixi/bin/pixi"
 
   shim:
     underscore:
       exports: "_"
-
+    pixi:
+      exports: 'PIXI'
     jquery:
       exports: "$"
-
     backbone:
       deps: ["underscore", "jquery"]
       exports: "Backbone"
