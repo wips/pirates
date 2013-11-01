@@ -37,7 +37,4 @@ define (require) ->
       it 'should initialize world model', ->
         init = env.stub WorldModel::, 'init'
         sut = new ApplicationView
-        init.should.have.been.calledWith
-          height: 1
-          width: 1
-          fields: []
+        init.should.have.been.calledWith DataSource

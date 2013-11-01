@@ -13,3 +13,6 @@ define (require) ->
       @height = params.height
       @fields = new Array @width*@height
       @fields[i] = FieldFactory::create params.fields[i] for i of params.fields
+
+    getFields: ->
+      @fields
