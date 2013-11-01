@@ -108,3 +108,8 @@ define (require) ->
       sut.renderField()
       addChild.should.have.been.calledWith 'some grafics'
 
+    it "should calculate coordinates on canvas by field coordinates", ->
+      coordinates = x:3, y:2
+      sut.getFieldCoordinates(coordinates).x.should.equal coordinates.x * WorldView::FIELD_WIDTH
+      sut.getFieldCoordinates(coordinates).y.should.equal coordinates.y * WorldView::FIELD_HEIGHT
+

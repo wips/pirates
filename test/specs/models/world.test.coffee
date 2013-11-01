@@ -30,13 +30,20 @@ define (require) ->
       world.init params
       world.fields.length.should.equal params.height * params.width
 
-    describe "field types", ->
+    it "should get coordinates by position in field array", ->
+      params.width = 5
+      params.height = 3
+      position = 3
+      world.init params
+      coordinates = world.getCoordinates position
+      coordinates.x.should.equal position % params.width
+      coordinates.y.should.equal position / params.width | 0
 
+    describe "field types", ->
       it 'should create fields', ->
         create = env.stub FieldFactory::, 'create'
         world.init params
         create.callCount.should.equal params.fields.length
-
       using 'fields', [1..16], (type) ->
         it 'should pass field type to factory', ->
           create = env.stub FieldFactory::, 'create'

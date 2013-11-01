@@ -4,13 +4,17 @@ define (require) ->
   FieldViewFactory = require "views/factories/field"
 
   class World
+    CANVAS_WIDTH: 1060
+    CANVAS_HEIGTH: 600
+    FIELD_WIDTH: 20
+    FIELD_HEIGHT: 20
     init: (params) ->
       @model = params?.model
       @stage = new pixi.Stage 0xEEFFFF
-      @renderer = pixi.autoDetectRenderer 1060, 600
+      @renderer = pixi.autoDetectRenderer World::CANVAS_WIDTH, World::CANVAS_HEIGTH
 
     render: ->
-      @renderField field, @getFieldCoordinates() for field in @model.getFields()
+      @renderField field, @getFieldCoordinates @model.getCoordinates i for field, i in @model.getFields()
       @renderer.render @stage
       @renderer.view
 
@@ -20,7 +24,7 @@ define (require) ->
 
       @stage.addChild graphics if @stage
 
-    getFieldCoordinates: ->
-      x: 42
-      y: 42
+    getFieldCoordinates: (coordinates)->
+      x: coordinates.x * World::FIELD_WIDTH
+      y: coordinates.y * World::FIELD_HEIGHT
 

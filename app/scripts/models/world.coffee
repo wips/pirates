@@ -16,3 +16,8 @@ define (require) ->
 
     getFields: ->
       @fields
+
+    getCoordinates: (position) ->
+      x: position % @width, y: position / @width | 0
+
+
