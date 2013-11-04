@@ -11,6 +11,7 @@ define (require) ->
     init: (params) ->
       @model = params?.model
       @stage = new pixi.Stage 0xEEFFFF
+      @graphics = new pixi.Graphics()
       @renderer = pixi.autoDetectRenderer World::CANVAS_WIDTH, World::CANVAS_HEIGTH
 
     render: ->
@@ -20,9 +21,8 @@ define (require) ->
 
     renderField: (model, coordinates) ->
       view = FieldViewFactory::create model
-      graphics = view.render coordinates
-
-      @stage.addChild graphics if @stage
+      view.render @graphics, coordinates
+      @stage.addChild @graphics if @stage
 
     getFieldCoordinates: (coordinates)->
       x: coordinates.x * World::FIELD_WIDTH

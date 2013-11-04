@@ -18,6 +18,11 @@ define (require) ->
       sut.init()
       stageStub.should.have.been.calledWithNew
 
+    it "should initialize Graphics", ->
+      graphicsStub = env.stub pixi, 'Graphics'
+      sut.init()
+      graphicsStub.should.have.been.calledWithNew
+
     it "should initialize model", ->
       sut.init model: model
       sut.model.should.equal model
@@ -97,8 +102,9 @@ define (require) ->
       coordinates = some: 'obj'
       render = env.stub()
       env.stub(FieldViewFactory::, 'create').returns render: render
+      sut.init model: model
       sut.renderField {}, coordinates
-      render.should.have.been.calledWith coordinates
+      render.should.have.been.calledWith sut.graphics, coordinates
 
     it "should add result of rendering to stage as child", ->
       sut.init model: model
@@ -106,7 +112,7 @@ define (require) ->
       addChild = env.stub sut.stage, 'addChild'
       env.stub(FieldViewFactory::, 'create').returns fieldView
       sut.renderField()
-      addChild.should.have.been.calledWith 'some grafics'
+      addChild.should.have.been.calledWith sut.graphics
 
     it "should calculate coordinates on canvas by field coordinates", ->
       coordinates = x:3, y:2
