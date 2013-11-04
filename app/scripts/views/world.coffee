@@ -21,7 +21,7 @@ define (require) ->
 
     renderField: (model, coordinates) ->
       view = FieldViewFactory::create model
-      view.render @graphics, coordinates
+      view.render @stage, @graphics, coordinates
       @stage.addChild @graphics if @stage
 
     getFieldCoordinates: (coordinates)->
