@@ -22,7 +22,6 @@ define (require) ->
     renderField: (model, coordinates) ->
       view = FieldViewFactory::create model
       view.render @stage, @graphics, coordinates
-      @stage.addChild @graphics if @stage
 
     getFieldCoordinates: (coordinates)->
       x: coordinates.x * World::FIELD_WIDTH

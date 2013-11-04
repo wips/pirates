@@ -6,6 +6,7 @@ define (require) ->
     sut = null
     coordinates = null
     graphics = null
+    stage = null
 
     beforeEach ->
       sut = new PortView
@@ -14,10 +15,10 @@ define (require) ->
         beginFill: env.stub()
         drawRect: env.stub()
 
-    it 'should draw with red color', ->
-      sut.render graphics, coordinates
-      graphics.beginFill.should.have.been.calledWith 0xFF0000
+    it 'should draw with #708090 color', ->
+      sut.render stage, graphics, coordinates
+      graphics.beginFill.should.have.been.calledWith 0x708090
 
     it 'should draw with rectangle', ->
-      sut.render graphics, coordinates
+      sut.render stage, graphics, coordinates
       graphics.drawRect.should.have.been.calledWith coordinates.x, coordinates.y, 20, 20

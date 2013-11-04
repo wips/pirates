@@ -104,7 +104,7 @@ define (require) ->
       env.stub(FieldViewFactory::, 'create').returns render: render
       sut.init model: model
       sut.renderField {}, coordinates
-      render.should.have.been.calledWith sut.graphics, coordinates
+      render.should.have.been.calledWith sut.stage, sut.graphics, coordinates
 
     it "should add result of rendering to stage as child", ->
       sut.init model: model
