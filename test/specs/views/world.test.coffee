@@ -8,18 +8,23 @@ define (require) ->
   describe "World View", ->
     sut = null
     model = null
+    stageStub = null
 
     beforeEach ->
       sut = new WorldView
       model = new World
 
+
     it "should initialize stage", ->
       stageStub = env.stub pixi, 'Stage'
+      stageStub.returns addChild: env.stub()
       sut.init()
       stageStub.should.have.been.calledWithNew
 
     it "should initialize Graphics", ->
       graphicsStub = env.stub pixi, 'Graphics'
+      stageStub = env.stub pixi, 'Stage'
+      stageStub.returns addChild: env.stub()
       sut.init()
       graphicsStub.should.have.been.calledWithNew
 

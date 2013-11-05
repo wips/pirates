@@ -21,3 +21,7 @@ define (require) ->
 
     it "should create view for ground", ->
       FieldViewFactory::create(new Ground).should.be.instanceOf GroundView
+
+    it 'should pass model to view',->
+      model = new Ground
+      FieldViewFactory::create(model).model.should.equal model

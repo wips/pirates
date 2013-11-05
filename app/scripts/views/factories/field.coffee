@@ -11,6 +11,8 @@ define (require) ->
 
   class FieldViewFactory
     create: (model) ->
-      return new OceanView if model instanceof Ocean
-      return new PortView if model instanceof Port
-      return new GroundView if model instanceof Ground
+      view = new OceanView if model instanceof Ocean
+      view = new PortView if model instanceof Port
+      view = new GroundView if model instanceof Ground
+      view.model = model
+      view

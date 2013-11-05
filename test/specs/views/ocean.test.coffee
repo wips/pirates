@@ -1,5 +1,6 @@
 define (require) ->
 
+  FieldFactory = require "models/factories/field"
   OceanView = require "views/ocean"
   pixi = require "pixi"
 
@@ -11,6 +12,7 @@ define (require) ->
 
     beforeEach ->
       sut = new OceanView
+      sut.model = {}
       coordinates = {x: 42, y: 24}
       stage = addChild: env.stub()
       graphics =
@@ -30,10 +32,16 @@ define (require) ->
       sut.render stage, graphics, coordinates
       graphics.endFill.should.have.been.calledAfter graphics.drawRect
 
-    it 'should draw drift direction arrow', ->
+    it 'should draw drift direction arrow for non no drift field', ->
       drawDirectionArrow = env.stub sut, 'drawDirectionArrow'
       sut.render stage, graphics, coordinates
       drawDirectionArrow.should.have.been.calledWith stage
+
+    it 'should not draw drift direction arrow for no drift field', ->
+      drawDirectionArrow = env.stub sut, 'drawDirectionArrow'
+      sut.model = driftDirection: FieldFactory::OCEAN_NO_DRIFT
+      sut.render stage, graphics, coordinates
+      drawDirectionArrow.should.have.not.been.called
 
     describe 'drawDirectionArrow', ->
       fromImage = null
@@ -77,9 +85,44 @@ define (require) ->
 
       it 'should set positions to arrow', ->
         sut.drawDirectionArrow stage, coordinates
-        arrowSprite.position.should.deep.equal x: coordinates.x, y: coordinates.y
+        arrowSprite.position.should.deep.equal x: coordinates.x + 10, y: coordinates.y + 10
 
+      it 'should set rotation to arrow for OCEAN_NORTH_DRIFT', ->
+        sut.model = driftDirection: FieldFactory::OCEAN_NORTH_DRIFT
+        sut.drawDirectionArrow stage, coordinates
+        arrowSprite.rotation.should.equal Math.PI*3/2
 
+      it 'should set rotation to arrow for OCEAN_SOUTH_DRIFT', ->
+        sut.model = driftDirection: FieldFactory::OCEAN_SOUTH_DRIFT
+        sut.drawDirectionArrow stage, coordinates
+        arrowSprite.rotation.should.equal Math.PI*1/2
 
+      it 'should set rotation to arrow for OCEAN_WEST_DRIFT', ->
+        sut.model = driftDirection: FieldFactory::OCEAN_WEST_DRIFT
+        sut.drawDirectionArrow stage, coordinates
+        arrowSprite.rotation.should.equal Math.PI
 
+      it 'should set rotation to arrow for OCEAN_EAST_DRIFT', ->
+        sut.model = driftDirection: FieldFactory::OCEAN_EAST_DRIFT
+        sut.drawDirectionArrow stage, coordinates
+        arrowSprite.rotation.should.equal 0
 
+      it 'should set rotation to arrow for OCEAN_SOUTHEAST_DRIFT', ->
+        sut.model = driftDirection: FieldFactory::OCEAN_SOUTHEAST_DRIFT
+        sut.drawDirectionArrow stage, coordinates
+        arrowSprite.rotation.should.equal Math.PI/4
+
+      it 'should set rotation to arrow for OCEAN_SOUTHWEST_DRIFT', ->
+        sut.model = driftDirection: FieldFactory::OCEAN_SOUTHWEST_DRIFT
+        sut.drawDirectionArrow stage, coordinates
+        arrowSprite.rotation.should.equal Math.PI * 3/4
+
+      it 'should set rotation to arrow for OCEAN_SOUTHWEST_DRIFT', ->
+        sut.model = driftDirection: FieldFactory::OCEAN_NORTHWEST_DRIFT
+        sut.drawDirectionArrow stage, coordinates
+        arrowSprite.rotation.should.equal Math.PI * 7/4
+
+      it 'should set rotation to arrow for OCEAN_SOUTHWEST_DRIFT', ->
+        sut.model = driftDirection: FieldFactory::OCEAN_NORTHEAST_DRIFT
+        sut.drawDirectionArrow stage, coordinates
+        arrowSprite.rotation.should.equal Math.PI * 9/4

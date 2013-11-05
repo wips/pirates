@@ -12,6 +12,7 @@ define (require) ->
       @model = params?.model
       @stage = new pixi.Stage 0xEEFFFF
       @graphics = new pixi.Graphics()
+      @stage.addChild @graphics
       @renderer = pixi.autoDetectRenderer World::CANVAS_WIDTH, World::CANVAS_HEIGTH
 
     render: ->
