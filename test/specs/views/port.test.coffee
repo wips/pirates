@@ -14,6 +14,7 @@ define (require) ->
       graphics =
         beginFill: env.stub()
         drawRect: env.stub()
+        endFill: env.stub()
 
     it 'should draw with #708090 color', ->
       sut.render stage, graphics, coordinates
@@ -22,3 +23,7 @@ define (require) ->
     it 'should draw with rectangle', ->
       sut.render stage, graphics, coordinates
       graphics.drawRect.should.have.been.calledWith coordinates.x, coordinates.y, 20, 20
+
+    it 'should endFill after drawing', ->
+      sut.render stage, graphics, coordinates
+      graphics.endFill.should.have.been.calledAfter graphics.drawRect

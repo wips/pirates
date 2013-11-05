@@ -106,14 +106,6 @@ define (require) ->
       sut.renderField {}, coordinates
       render.should.have.been.calledWith sut.stage, sut.graphics, coordinates
 
-    it "should add result of rendering to stage as child", ->
-      sut.init model: model
-      fieldView = render: env.stub().returns 'some grafics'
-      addChild = env.stub sut.stage, 'addChild'
-      env.stub(FieldViewFactory::, 'create').returns fieldView
-      sut.renderField()
-      addChild.should.have.been.calledWith sut.graphics
-
     it "should calculate coordinates on canvas by field coordinates", ->
       coordinates = x:3, y:2
       sut.getFieldCoordinates(coordinates).x.should.equal coordinates.x * WorldView::FIELD_WIDTH
