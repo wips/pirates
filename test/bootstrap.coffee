@@ -48,9 +48,14 @@ using = (name, values, func) ->
   i = 0
   count = values.length
   while i < count
-    values[i] = [values[i]]  if Object::toString.call(values[i]) isnt "[object Array]"
+    values[i] = [values[i]] if "[object Array]" isnt Object::toString.call values[i]
     func.apply this, values[i]
     i++
+
+usingValuesIt = (assumption, values, func) ->
+  for parameters in values
+    parameters = [parameters] if "[object Array]" isnt Object::toString.call parameters
+    it "#{assumption} with #{parameters}", -> func.apply this, parameters
 
 # initialize sinone sandbox
 beforeEach ->
