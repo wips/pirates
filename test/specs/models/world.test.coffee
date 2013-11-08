@@ -40,14 +40,15 @@ define (require) ->
       coordinates.y.should.equal position / params.width | 0
 
     describe "field types", ->
+
+      usingValuesIt 'should pass field type to factory', [1..16], (type) ->
+        create = env.stub FieldFactory::, 'create'
+        world.init params
+        create.should.have.been.calledWith type
+
       it 'should create fields', ->
         create = env.stub FieldFactory::, 'create'
         world.init params
         create.callCount.should.equal params.fields.length
-      using 'fields', [1..16], (type) ->
-        it 'should pass field type to factory', ->
-          create = env.stub FieldFactory::, 'create'
-          world.init params
-          create.should.have.been.calledWith type
 
 
