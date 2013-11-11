@@ -15,10 +15,15 @@ define (require) ->
         beginFill: env.stub()
         drawRect: env.stub()
         endFill: env.stub()
+        lineStyle: env.stub()
 
-    it 'should draw with #708090 color', ->
+    it 'should draw with #ff0000 color lines', ->
       sut.render stage, graphics, coordinates
-      graphics.beginFill.should.have.been.calledWith 0x708090
+      graphics.lineStyle.should.have.been.calledWith 1, 0xff0000
+
+    it 'should draw transperent rectangle', ->
+      sut.render stage, graphics, coordinates
+      graphics.beginFill.should.have.been.calledWith 0xFFFFFF, 0
 
     it 'should draw with rectangle', ->
       sut.render stage, graphics, coordinates

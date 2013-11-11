@@ -7,7 +7,8 @@ define (require) ->
   class OceanView
 
     render: (stage, graphics, coordinates) ->
-      graphics.beginFill 0xAFD6E8
+      graphics.beginFill 0xAFD6E8, 0
+      graphics.lineStyle 1, 0xAFD6E8
       graphics.drawRect coordinates.x, coordinates.y, 20, 20
       graphics.endFill()
       @drawDirectionArrow stage, coordinates if @model.driftDirection isnt FieldFactory::OCEAN_NO_DRIFT

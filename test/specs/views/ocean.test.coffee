@@ -19,10 +19,15 @@ define (require) ->
         beginFill: env.stub()
         drawRect: env.stub()
         endFill: env.stub()
+        lineStyle: env.stub()
 
-    it 'should draw with #AFD6E8 color', ->
+    it 'should draw with transperent', ->
       sut.render stage, graphics, coordinates
-      graphics.beginFill.should.have.been.calledWith 0xAFD6E8
+      graphics.beginFill.should.have.been.calledWith 0xAFD6E8, 0
+
+    it 'should draw with border', ->
+      sut.render stage, graphics, coordinates
+      graphics.lineStyle.should.have.been.calledWith 1, 0xAFD6E8
 
     it 'should draw with rectangle', ->
       sut.render stage, graphics, coordinates
