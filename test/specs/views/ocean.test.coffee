@@ -125,9 +125,9 @@ define (require) ->
       it 'should set rotation to arrow for OCEAN_SOUTHWEST_DRIFT', ->
         sut.model = driftDirection: FieldFactory::OCEAN_NORTHWEST_DRIFT
         sut.drawDirectionArrow stage, coordinates
-        arrowSprite.rotation.should.equal Math.PI * 7/4
+        arrowSprite.rotation.should.equal Math.PI * 5/4
 
       it 'should set rotation to arrow for OCEAN_SOUTHWEST_DRIFT', ->
         sut.model = driftDirection: FieldFactory::OCEAN_NORTHEAST_DRIFT
         sut.drawDirectionArrow stage, coordinates
-        arrowSprite.rotation.should.equal Math.PI * 9/4
+        arrowSprite.rotation.should.equal Math.PI * 7/4

@@ -27,8 +27,8 @@ define (require) ->
       arrow.rotation = 0 if @model.driftDirection is FieldFactory::OCEAN_EAST_DRIFT
       arrow.rotation = Math.PI / 4 if @model.driftDirection is FieldFactory::OCEAN_SOUTHEAST_DRIFT
       arrow.rotation = Math.PI * 3 / 4 if @model.driftDirection is FieldFactory::OCEAN_SOUTHWEST_DRIFT
-      arrow.rotation = Math.PI * 7 / 4 if @model.driftDirection is FieldFactory::OCEAN_NORTHWEST_DRIFT
-      arrow.rotation = Math.PI * 9 / 4 if @model.driftDirection is FieldFactory::OCEAN_NORTHEAST_DRIFT
+      arrow.rotation = Math.PI * 5 / 4 if @model.driftDirection is FieldFactory::OCEAN_NORTHWEST_DRIFT
+      arrow.rotation = Math.PI * 7 / 4 if @model.driftDirection is FieldFactory::OCEAN_NORTHEAST_DRIFT
 
       stage.addChild arrow
 
