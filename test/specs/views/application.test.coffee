@@ -15,8 +15,10 @@ define (require) ->
     describe 'after initialization', ->
 
       sut = null
+      init = null
 
       beforeEach ->
+        init =  env.stub WorldView::, 'init'
         sut = new ApplicationView
 
       it "should set rendered world view to DOM", ->
@@ -30,11 +32,10 @@ define (require) ->
         ApplicationView::el.should.equal '#main'
 
       it 'should pass world model to world view', ->
-        init = env.stub WorldView::, 'init'
         sut = new ApplicationView
         init.firstCall.args[0].model.should.be.instanceOf WorldModel
 
       it 'should initialize world model', ->
-        init = env.stub WorldModel::, 'init'
+        initModel = env.stub WorldModel::, 'init'
         sut = new ApplicationView
-        init.should.have.been.calledWith DataSource
+        initModel.should.have.been.calledWith DataSource

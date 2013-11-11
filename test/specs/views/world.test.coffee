@@ -9,22 +9,24 @@ define (require) ->
     sut = null
     model = null
     stageStub = null
+    graphicsStub = null
+    autoDetectRenderer = null
 
     beforeEach ->
+      stageStub = env.stub pixi, 'Stage'
+      stageStub.returns addChild: env.stub()
+      graphicsStub = env.stub pixi, 'Graphics'
+      autoDetectRenderer = env.stub pixi, 'autoDetectRenderer'
+      autoDetectRenderer.returns render: ->
       sut = new WorldView
       model = new World
 
 
     it "should initialize stage", ->
-      stageStub = env.stub pixi, 'Stage'
-      stageStub.returns addChild: env.stub()
       sut.init()
       stageStub.should.have.been.calledWithNew
 
     it "should initialize Graphics", ->
-      graphicsStub = env.stub pixi, 'Graphics'
-      stageStub = env.stub pixi, 'Stage'
-      stageStub.returns addChild: env.stub()
       sut.init()
       graphicsStub.should.have.been.calledWithNew
 
@@ -32,17 +34,12 @@ define (require) ->
       sut.init model: model
       sut.model.should.equal model
 
-    it "should have information about stage", ->
-      sut.init()
-      sut.stage.should.be.instanceOf pixi.Stage
-
     it "should initialize renderer", ->
-      stageStub = env.stub pixi, 'autoDetectRenderer'
       sut.init()
-      stageStub.should.have.been.calledWith 1060, 600
+      autoDetectRenderer.should.have.been.calledWith 1060, 600
 
     it "should have information about renderer", ->
-      env.stub(pixi, 'autoDetectRenderer').returns 'renderer'
+      autoDetectRenderer.returns 'renderer'
       sut.init()
       sut.renderer.should.equal 'renderer'
 
