@@ -23,7 +23,7 @@ define (require) ->
 
     it 'should draw transperent rectangle', ->
       sut.render stage, graphics, coordinates
-      graphics.beginFill.should.have.been.calledWith 0xFFFFFF, 0
+      graphics.beginFill.should.have.been.calledWith 0xFFFFFF, 0.3
 
     it 'should draw with rectangle', ->
       sut.render stage, graphics, coordinates

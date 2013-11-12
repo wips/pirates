@@ -23,7 +23,7 @@ define (require) ->
 
     it 'should draw with transperent', ->
       sut.render stage, graphics, coordinates
-      graphics.beginFill.should.have.been.calledWith 0xAFD6E8, 0
+      graphics.beginFill.should.have.been.calledWith 0xAFD6E8, 0.3
 
     it 'should draw with border', ->
       sut.render stage, graphics, coordinates

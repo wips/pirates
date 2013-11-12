@@ -2,6 +2,7 @@ define (require) ->
 
   ApplicationView = require "views/application"
   WorldView = require "views/world"
+  ShipsView = require "views/ships"
   WorldModel = require "models/world"
   DataSource = require "models/data/world"
 
@@ -39,3 +40,10 @@ define (require) ->
         initModel = env.stub WorldModel::, 'init'
         sut = new ApplicationView
         initModel.should.have.been.calledWith DataSource
+
+      describe 'Ships', ->
+
+        it 'should show ships on map', ->
+          shipsView = env.stub ShipsView::, 'render'
+          sut.render()
+          shipsView.should.have.been.calledWith sut.worldView
