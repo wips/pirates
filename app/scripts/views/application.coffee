@@ -4,6 +4,7 @@ define (require) ->
   WorldView = require "views/world"
   WorldModel = require "models/world"
   DataSource = require "models/data/world"
+  ShipsView = require "views/ships"
 
   class ApplicationView extends Backbone.View
     el: '#main'
@@ -17,3 +18,4 @@ define (require) ->
 
     render: ->
       @$el.html @worldView.render()
+      (new ShipsView).render @worldView
