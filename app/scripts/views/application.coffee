@@ -15,7 +15,9 @@ define (require) ->
       world.init DataSource
       @worldView.init
         model: world
+      @shipsView = new ShipsView
+      @shipsView.init DataSource.ships
 
     render: ->
       @$el.html @worldView.render()
-      (new ShipsView []).render @worldView
+      @shipsView.render @worldView

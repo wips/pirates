@@ -5,10 +5,11 @@ define (require) ->
 
   class ShipsView
     ships: []
-    constructor: (shipsData) ->
+
+    init: (shipsData) ->
       @ships.push @createShip parameters for parameters in shipsData
 
-    render: ->
+    render: (@worldView) ->
       # @TODO move getFiledCoordinates to ShipView
       shipView.render @getFieldCoordinates(shipView.model), @worldView.stage for shipView in @ships
 
@@ -20,6 +21,5 @@ define (require) ->
       ship = new Ship
       ship.init parameters
       new ShipView ship
-
 
   ShipsView

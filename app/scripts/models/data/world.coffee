@@ -37,5 +37,7 @@ define (require) ->
     height: 30
     width: 53
     fields: fakeFields
-
+    ships: [
+      {position: {x: 20, y: 10}}
+    ]
   worldData

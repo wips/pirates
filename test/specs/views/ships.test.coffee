@@ -42,10 +42,10 @@ define (require) ->
     it 'should create ship model', ->
       sut.createShip({}).model.should.be.instanceOf Ship
 
-    it 'should create ships during self creation', ->
+    it 'should create ships during initialization', ->
       shipParameters = any: 'params'
-      createShip = env.stub ShipsView::, 'createShip'
-      new ShipsView [shipParameters]
+      createShip = env.stub sut, 'createShip'
+      sut.init [shipParameters]
       createShip.should.have.been.calledWith shipParameters
 
     it 'should initialize ship parameters during ship creation', ->
@@ -56,8 +56,8 @@ define (require) ->
 
     it 'should collect ships views in ships field', ->
       shipView = {}
-      env.stub(ShipsView::, 'createShip').returns shipView
-      push = env.stub ShipsView::ships, 'push'
-      new ShipsView [zz:'zz']
+      env.stub(sut, 'createShip').returns shipView
+      push = env.stub sut.ships, 'push'
+      sut.init [{}]
       push.should.have.been.calledWith shipView
 
