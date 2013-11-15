@@ -18,4 +18,4 @@ define (require) ->
 
     render: ->
       @$el.html @worldView.render()
-      (new ShipsView).render @worldView
+      (new ShipsView []).render @worldView

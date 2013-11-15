@@ -1,14 +1,25 @@
 define (require) ->
 
-  class ShipsView
+  Ship = require "models/ship"
+  ShipView = require "views/ship"
 
-    initialize: ->
-      @worldView = stage: 'zzz'
+  class ShipsView
+    ships: []
+    constructor: (shipsData) ->
+      @ships.push @createShip parameters for parameters in shipsData
 
     render: ->
-      ship.render @getFieldCoordinates(), @worldView.stage for ship in @ships
+      # @TODO move getFiledCoordinates to ShipView
+      shipView.render @getFieldCoordinates(shipView.model), @worldView.stage for shipView in @ships
 
-    getFieldCoordinates: ->
-      1
+
+    getFieldCoordinates: (ship) ->
+      @worldView.getFieldCoordinates ship.position
+
+    createShip: (parameters) ->
+      ship = new Ship
+      ship.init parameters
+      new ShipView ship
+
 
   ShipsView
