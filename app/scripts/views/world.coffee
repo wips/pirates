@@ -30,7 +30,7 @@ define (require) ->
       y: coordinates.y * World::FIELD_HEIGHT
 
     addBackground: (stage) ->
-      background = new pixi.Sprite.fromImage '/images/map.jpg'
+      background = new pixi.Sprite.fromImage '/images/map.png'
       background.position.x = 0
       background.position.y = 0
       background.width = World::CANVAS_WIDTH
