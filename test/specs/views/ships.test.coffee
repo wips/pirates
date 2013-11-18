@@ -3,13 +3,18 @@ define (require) ->
   ShipsView = require "views/ships"
   ShipView = require "views/ship"
   Ship = require "models/ship"
+  pixi = require "pixi"
 
   describe "Ships View", ->
     sut = null
     shipRender = null
     worldView = null
+    stage = null
 
     beforeEach ->
+      stage = addChild: env.stub()
+      env.stub(pixi, 'Stage').returns stage
+
       sut = new ShipsView []
       worldView =
         stage: {}
@@ -30,15 +35,20 @@ define (require) ->
         sut.render()
         shipRender.callCount.should.equal sut.ships.length
 
+      it 'should return stage', ->
+        sut.render().should.equal stage
+
+
+
       it 'should pass coordinates to ship', ->
         coordinates = x:100, y: 200
         env.stub(sut, 'getFieldCoordinates').returns coordinates
         sut.render()
         shipRender.should.have.been.calledWith coordinates
 
-      it 'should be on world map', ->
+      it 'should be on stage', ->
         sut.render()
-        shipRender.should.have.been.calledWith sinon.match.any, sut.worldView.stage
+        shipRender.should.have.been.calledWith sinon.match.any, stage
 
       it 'should calculate coordinates accouding worldmap size', ->
         ship = position: {}

@@ -5,6 +5,7 @@ define (require) ->
   ShipsView = require "views/ships"
   WorldModel = require "models/world"
   DataSource = require "models/data/world"
+  pixi = require "pixi"
 
   describe "Application View", ->
 
@@ -18,18 +19,38 @@ define (require) ->
 
       sut = null
       init = null
+      autoDetectRenderer = null
+      rendered = null
 
       beforeEach ->
+        rendered =
+          view: {}
+          render: env.stub()
         init =  env.stub WorldView::, 'init'
+        autoDetectRenderer = env.stub pixi, 'autoDetectRenderer'
+        autoDetectRenderer.returns rendered
         sut = new ApplicationView
 
+      it 'should create stage', ->
+        stage = {}
+        env.stub(pixi, 'Stage').returns stage
+        sut = new ApplicationView
+        sut.stage.should.equal stage
+
+      it "should initialize renderer", ->
+        autoDetectRenderer.should.have.been.calledWith 1060, 600
+
+      it "should have information about renderer", ->
+        autoDetectRenderer.returns 'renderer'
+        sut = new ApplicationView
+        sut.renderer.should.equal 'renderer'
+
       it "should set rendered world view to DOM", ->
-        rendered = 'some canvas'
-        env.stub(sut.worldView, 'render').returns rendered
-        env.stub ShipsView::, 'render'
+        env.stub sut.shipsView, 'render'
+        env.stub sut.worldView, 'render'
         html = env.stub sut.$el, 'html'
         sut.render()
-        html.should.have.been.calledWith rendered
+        html.should.have.been.calledWith sut.renderer.view
 
       it "should have DOM element", ->
         ApplicationView::el.should.equal '#main'
@@ -46,12 +67,20 @@ define (require) ->
       describe 'Ships', ->
 
         it 'should show ships on map', ->
+          render = env.stub sut.shipsView, 'render'
           env.stub sut.worldView, 'render'
-          shipsView = env.stub ShipsView::, 'render'
+          sut.stage = {}
           sut.render()
-          shipsView.should.have.been.called
+          render.should.have.been.calledWith sut.stage
 
         it 'should pass ships data to ships', ->
           init = env.stub ShipsView::, 'init'
           sut = new ApplicationView
           init.should.have.been.calledWith DataSource.ships, sut.worldView
+
+      it 'should render world stage', ->
+        render = env.stub sut.worldView, 'render'
+        env.stub sut.shipsView, 'render'
+        sut.stage = {}
+        sut.render()
+        render.should.have.been.calledWith sut.stage

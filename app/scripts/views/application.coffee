@@ -5,6 +5,7 @@ define (require) ->
   WorldModel = require "models/world"
   DataSource = require "models/data/world"
   ShipsView = require "views/ships"
+  pixi = require "pixi"
 
   class ApplicationView extends Backbone.View
     el: '#main'
@@ -17,7 +18,12 @@ define (require) ->
         model: world
       @shipsView = new ShipsView
       @shipsView.init DataSource.ships, @worldView
+      @renderer = pixi.autoDetectRenderer 1060, 600
+      @stage = new pixi.Stage
 
     render: ->
-      @$el.html @worldView.render()
-      @shipsView.render()
+      @worldView.render @stage
+      @shipsView.render @stage
+      @$el.html @renderer.view
+
+  ApplicationView

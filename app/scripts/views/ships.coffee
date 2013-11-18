@@ -2,6 +2,7 @@ define (require) ->
 
   Ship = require "models/ship"
   ShipView = require "views/ship"
+  pixi = require "pixi"
 
   class ShipsView
     ships: []
@@ -11,8 +12,11 @@ define (require) ->
       @ships.push @createShip parameters for parameters in shipsData
 
     render: () ->
-      # @TODO move getFiledCoordinates to ShipView
-      shipView.render @getFieldCoordinates(shipView.model), @worldView.stage for shipView in @ships
+      stage = new pixi.Stage
+      stage.worldAlpha = 0
+      shipView.render @getFieldCoordinates(shipView.model), stage for shipView in @ships
+
+      stage
 
     getFieldCoordinates: (ship) ->
       @worldView.getFieldCoordinates ship.position

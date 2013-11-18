@@ -10,16 +10,14 @@ define (require) ->
     FIELD_HEIGHT: 20
     init: (params) ->
       @model = params?.model
-      @stage = new pixi.Stage 0xEEFFFF
       @graphics = new pixi.Graphics()
       @renderer = pixi.autoDetectRenderer World::CANVAS_WIDTH, World::CANVAS_HEIGTH
 
-    render: ->
+    render: (@stage) ->
       @addBackground()
-      @stage.addChild @graphics
+      stage.addChild @graphics
       @renderField field, @getFieldCoordinates @model.getCoordinates i for field, i in @model.getFields()
-      @renderer.render @stage
-      @renderer.view
+
 
     renderField: (model, coordinates) ->
       view = FieldViewFactory::create model
@@ -36,6 +34,6 @@ define (require) ->
       background.width = World::CANVAS_WIDTH
       background.height = World::CANVAS_HEIGTH
 
-#      @stage.addChild background
+      @stage.addChild background
 
 

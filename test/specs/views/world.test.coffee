@@ -8,15 +8,12 @@ define (require) ->
   describe "World View", ->
     sut = null
     model = null
-    stageStub = null
     graphicsStub = null
     autoDetectRenderer = null
     stage = null
 
     beforeEach ->
-      stageStub = env.stub pixi, 'Stage'
       stage = addChild: env.stub()
-      stageStub.returns stage
       graphicsStub = env.stub pixi, 'Graphics'
       autoDetectRenderer = env.stub pixi, 'autoDetectRenderer'
       autoDetectRenderer.returns render: ->
@@ -24,9 +21,6 @@ define (require) ->
       model = new World
 
     describe 'Init', ->
-      it "should initialize stage", ->
-        sut.init()
-        stageStub.should.have.been.calledWithNew
 
       it "should initialize Graphics", ->
         sut.init()
@@ -35,15 +29,6 @@ define (require) ->
       it "should initialize model", ->
         sut.init model: model
         sut.model.should.equal model
-
-      it "should initialize renderer", ->
-        sut.init()
-        autoDetectRenderer.should.have.been.calledWith 1060, 600
-
-      it "should have information about renderer", ->
-        autoDetectRenderer.returns 'renderer'
-        sut.init()
-        sut.renderer.should.equal 'renderer'
 
     it "should calculate coordinates on canvas by field coordinates", ->
       coordinates = x:3, y:2
@@ -73,9 +58,6 @@ define (require) ->
         sut.renderField {}, coordinates
         render.should.have.been.calledWith sut.stage, sut.graphics, coordinates
 
-
-
-
     describe 'render', ->
 
       beforeEach ->
@@ -84,22 +66,17 @@ define (require) ->
       it "should render background before strelochki(arrows)", ->
         renderField = env.stub sut, 'renderField'
         addBackground = env.stub sut, 'addBackground'
-        sut.render()
+        sut.render stage
         addBackground.should.have.been.calledBefore renderField
 
       it "should render background before adding fields to stage", ->
         addBackground = env.stub sut, 'addBackground'
-        sut.render()
+        sut.render stage
         addBackground.should.have.been.calledBefore stage.addChild
-
-      xit "should add grafics before render fields", ->
-        renderField = env.stub sut, 'renderField'
-        sut.render()
-        renderField.should.have.been.calledAfter stage.addChild
 
       it "should have image as background", ->
         addBackground = env.stub sut, 'addBackground'
-        sut.render()
+        sut.render stage
         addBackground.should.have.been.called
 
       it 'should pass coordinates to field renderer', ->
@@ -107,7 +84,7 @@ define (require) ->
         env.stub(model, 'getFields').returns [1]
         env.stub(sut, 'getFieldCoordinates').returns coordinates
         renderField = env.stub sut, 'renderField'
-        sut.render()
+        sut.render stage
         renderField.should.have.been.calledWith sinon.match.any, coordinates
 
       it 'should pass tile data to renderer', ->
@@ -117,27 +94,15 @@ define (require) ->
         fields[indexToCheck] = 'some val'
         env.stub(model, 'getFields').returns fields
         renderField = env.stub sut, "renderField"
-        sut.render()
+        sut.render stage
         renderField.args[indexToCheck][0].should.equal fields[indexToCheck]
-
-      it 'should vperdolivat canvas', ->
-        view = 'view'
-        env.stub sut.renderer, 'render'
-        sut.renderer.view = view
-        sut.render().should.equal view
-
-      it 'should render pixi renderer canvas', ->
-        sut.init model: model
-        render = env.stub sut.renderer, 'render'
-        sut.render()
-        render.should.have.been.calledWith sut.stage
 
       it 'should render each field', ->
         fieldsNumber = 16
         env.stub(model, 'getFields').returns [1..fieldsNumber]
         renderField = env.stub sut, "renderField"
         sut.init model: model
-        sut.render()
+        sut.render stage
         renderField.callCount.should.equal fieldsNumber
 
     describe 'add background', ->
