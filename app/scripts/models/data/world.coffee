@@ -39,5 +39,7 @@ define (require) ->
     fields: fakeFields
     ships: [
       {position: {x: 20, y: 10}}
+      {position: {x: 5, y: 5}}
+      {position: {x: 1, y: 1}}
     ]
   worldData

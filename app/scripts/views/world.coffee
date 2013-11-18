@@ -36,6 +36,6 @@ define (require) ->
       background.width = World::CANVAS_WIDTH
       background.height = World::CANVAS_HEIGTH
 
-      @stage.addChild background
+#      @stage.addChild background
 
 

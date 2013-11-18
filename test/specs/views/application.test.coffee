@@ -49,19 +49,9 @@ define (require) ->
           env.stub sut.worldView, 'render'
           shipsView = env.stub ShipsView::, 'render'
           sut.render()
-          shipsView.should.have.been.calledWith sut.worldView
+          shipsView.should.have.been.called
 
         it 'should pass ships data to ships', ->
           init = env.stub ShipsView::, 'init'
-          new ApplicationView
-          init.should.have.been.calledWith DataSource.ships
-
-        it 'should render ships with world', ->
-          render = env.stub sut.shipsView, 'render'
-
-          sut.worldView =
-            render: env.stub()
-            getFieldCoordinates: env.stub()
-
-          sut.render()
-          render.should.have.been.calledWith sut.worldView
+          sut = new ApplicationView
+          init.should.have.been.calledWith DataSource.ships, sut.worldView
