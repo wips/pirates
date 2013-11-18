@@ -13,10 +13,12 @@ define (require) ->
       @graphics = new pixi.Graphics()
       @renderer = pixi.autoDetectRenderer World::CANVAS_WIDTH, World::CANVAS_HEIGTH
 
-    render: (@stage) ->
-      @addBackground()
-      stage.addChild @graphics
+    render: (stage) ->
+      @stage = stage
+      @addBackground stage
+      @stage.addChild @graphics
       @renderField field, @getFieldCoordinates @model.getCoordinates i for field, i in @model.getFields()
+
 
 
     renderField: (model, coordinates) ->
@@ -27,13 +29,13 @@ define (require) ->
       x: coordinates.x * World::FIELD_WIDTH
       y: coordinates.y * World::FIELD_HEIGHT
 
-    addBackground: ->
+    addBackground: (stage) ->
       background = new pixi.Sprite.fromImage '/images/map.jpg'
       background.position.x = 0
       background.position.y = 0
       background.width = World::CANVAS_WIDTH
       background.height = World::CANVAS_HEIGTH
 
-      @stage.addChild background
+      stage.addChild background
 
 

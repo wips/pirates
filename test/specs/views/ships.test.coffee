@@ -32,22 +32,18 @@ define (require) ->
         sut.worldView = worldView
 
       it 'should render each ship', ->
-        sut.render()
+        sut.render stage
         shipRender.callCount.should.equal sut.ships.length
-
-      it 'should return stage', ->
-        sut.render().should.equal stage
-
 
 
       it 'should pass coordinates to ship', ->
         coordinates = x:100, y: 200
         env.stub(sut, 'getFieldCoordinates').returns coordinates
-        sut.render()
+        sut.render stage
         shipRender.should.have.been.calledWith coordinates
 
       it 'should be on stage', ->
-        sut.render()
+        sut.render stage
         shipRender.should.have.been.calledWith sinon.match.any, stage
 
       it 'should calculate coordinates accouding worldmap size', ->

@@ -24,6 +24,7 @@ define (require) ->
     render: ->
       @worldView.render @stage
       @shipsView.render @stage
+      @renderer.render @stage
       @$el.html @renderer.view
 
   ApplicationView

@@ -30,9 +30,18 @@ require [
   "backbone"
   "routes/application"
   "handlebars"
-], ($, Backbone, ApplicationRouter) ->
+], ($, Backbone, ApplicationRouter, pixi) ->
 
-  $ ->
+
+  assetsToLoader = [
+    "/images/map.jpg"
+  ]
+  loader = new PIXI.AssetLoader assetsToLoader
+
+  loader.onComplete = ->
     console.log "Enjoy okroshka!"
     new ApplicationRouter()
     Backbone.history.start()
+
+  loader.load()
+

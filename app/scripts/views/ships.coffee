@@ -11,12 +11,8 @@ define (require) ->
       @worldView = worldView
       @ships.push @createShip parameters for parameters in shipsData
 
-    render: () ->
-      stage = new pixi.Stage
-      stage.worldAlpha = 0
+    render: (stage) ->
       shipView.render @getFieldCoordinates(shipView.model), stage for shipView in @ships
-
-      stage
 
     getFieldCoordinates: (ship) ->
       @worldView.getFieldCoordinates ship.position

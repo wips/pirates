@@ -20,15 +20,15 @@ define (require) ->
       sut = null
       init = null
       autoDetectRenderer = null
-      rendered = null
+      renderer = null
 
       beforeEach ->
-        rendered =
+        renderer =
           view: {}
           render: env.stub()
         init =  env.stub WorldView::, 'init'
         autoDetectRenderer = env.stub pixi, 'autoDetectRenderer'
-        autoDetectRenderer.returns rendered
+        autoDetectRenderer.returns renderer
         sut = new ApplicationView
 
       it 'should create stage', ->
@@ -84,3 +84,10 @@ define (require) ->
         sut.stage = {}
         sut.render()
         render.should.have.been.calledWith sut.stage
+
+      it 'should render stage', ->
+        sut.stage = {}
+        env.stub sut.worldView, 'render'
+        env.stub sut.shipsView, 'render'
+        sut.render()
+        renderer.render.should.have.been.calledWith sut.stage
