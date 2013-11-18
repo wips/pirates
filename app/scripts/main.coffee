@@ -29,14 +29,17 @@ require [
   "jquery"
   "backbone"
   "routes/application"
-  "handlebars"
+  "pixi"
 ], ($, Backbone, ApplicationRouter, pixi) ->
 
 
   assetsToLoader = [
     "/images/map.jpg"
+    "/images/arrow.png"
+    "/images/ship.png"
+    "/images/pirate_ship.png"
   ]
-  loader = new PIXI.AssetLoader assetsToLoader
+  loader = new pixi.AssetLoader assetsToLoader
 
   loader.onComplete = ->
     console.log "Enjoy okroshka!"
