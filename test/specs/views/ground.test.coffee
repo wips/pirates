@@ -19,7 +19,7 @@ define (require) ->
 
     it 'should draw with red color', ->
       sut.render stage, graphics, coordinates
-      graphics.beginFill.should.have.been.calledWith 0xBDB76B, 0.3
+      graphics.beginFill.should.have.been.calledWith 0xBDB76B, 0.1
 
     it 'should draw with rectangle', ->
       sut.render stage, graphics, coordinates

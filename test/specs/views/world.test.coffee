@@ -112,35 +112,27 @@ define (require) ->
       backgroundSprite = null
 
       beforeEach ->
-        fromImage = env.stub pixi.Texture, 'fromImage'
-        Sprite = env.stub pixi, 'Sprite'
-        backgroundSprite =
-          position:
-            x: null
-            y: null
-        Sprite.returns backgroundSprite
+        backgroundSprite = position: {x:0, y:0}
+        fromImage = env.stub pixi.Sprite, 'fromImage'
+        fromImage.returns backgroundSprite
         sut.stage = stage
 
       it 'should create map texture', ->
-        sut.addBackground()
+        sut.addBackground stage
         fromImage.should.have.been.calledWith "/images/map.jpg"
 
-      it 'should create sprite', ->
-        sut.addBackground()
-        Sprite.should.have.been.calledWithNew
-
-      it 'should place background in top left corner', ->
-        sut.addBackground()
-        backgroundSprite.position.should.deep.equal x: 0, y: 0
-
-      it 'should add background to stage', ->
-        sut.addBackground()
+      it 'should add sprite background to stage', ->
+        sut.addBackground stage
         stage.addChild.should.have.been.calledWith backgroundSprite
 
+      it 'should place background in top left corner', ->
+        sut.addBackground stage
+        backgroundSprite.position.should.deep.equal x: 0, y: 0
+
       it 'should set background height size same as canvas height', ->
-        sut.addBackground()
+        sut.addBackground stage
         backgroundSprite.height.should.equal WorldView::CANVAS_HEIGTH
 
       it 'should set background width size same as canvas width', ->
-        sut.addBackground()
+        sut.addBackground stage
         backgroundSprite.width.should.equal WorldView::CANVAS_WIDTH
